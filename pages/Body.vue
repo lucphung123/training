@@ -115,9 +115,7 @@
           </div>
         </div>
         <div class="w1/2 bg-white">
-          <div>
-            <p class="mt5%">Response</p>
-          </div>
+          
         </div>
       </div>
     </n-layout-footer>
