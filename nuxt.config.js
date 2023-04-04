@@ -46,6 +46,6 @@ export default defineNuxtConfig({
     host: "localhost", // Đổi host thành localhost
   },
   app: {
-    baseURL: "/nuxt-github-pages/",
+    baseURL: "/",
   },
 });
