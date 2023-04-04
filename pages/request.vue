@@ -272,12 +272,11 @@
                     </div>
                   </div>
                   <div>
-                    <n-dynamic-input
-                      v-model:value="value1"
-                      placeholder="Please type here"
-                      :min="3"
-                      :max="6"
-                    />
+                    <textarea
+                      ref="input"
+                      v-model="inputValue"
+                      @keyup.enter.prevent="submitInput"
+                    ></textarea>
                   </div>
                 </div>
               </n-tab-pane>
@@ -297,10 +296,13 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
+import queryString from 'query-string';
 const selectedRef = ref(1);
 const inputData = ref("https://6425a3217ac292e3cf0661d3.mockapi.io/LUCC");
 const responseData = ref(null);
-const value1 = ref("")
+const value1 = ref("");
+const inputValue = ref("");
+const inputRef = ref(null);
 onMounted(() => {
   console.log("Table mounted");
 });
@@ -353,9 +355,7 @@ const options1 = [
   },
 ];
 
-
 const receivedData = ref("");
-
 
 const getApi = async () => {
   console.log(selectedRef.value);
@@ -386,64 +386,66 @@ const getApi = async () => {
 };
 
 const handleGet = async () => {
-  const { data, } = await useFetch(inputData.value, {
-    method: "GET",
-  });
-  responseData.value = data.value;
+  try {
+    const response = await axios.get(inputData.value);
+    responseData.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+  console.log("🚀 ~ file: test.vue:46 ~ handleGet ~ handleGet:", handleGet);
 };
 
 const handlePost = async () => {
-  const { data, } = await useFetch(inputData.value, {
-    method: "POST",
-    body: {
-      requestId: "tien luc",
-      items: "helloooo",
-      count: "13",
-      anyKey: "anykeeee",
-    },
-  });
-  responseData.value = data.value;
-  // console.log("🚀 ~ file: detail.vue:373 ~ handlePost ~ data:", data);
+  try {
+    const data = JSON.parse(inputValue.value);
+    const response = await axios.post(inputData.value, data);
+    responseData.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
-
 const handlePut = async () => {
-  const { data, } = await useFetch(inputData.value, {
-    method: "PUT",
-    body: {
-      requestId: "qqq",
-      items: "PT kkkk",
-      count: "99999",
-      anyKey: "AAAAA",
-    },
-  });
-  responseData.value = data.value;
-  console.log("🚀 ~ file: detail.vue:373 ~ handlePost ~ data:", data);
+  try {
+    const data = JSON.parse(inputValue.value);
+    const response = await axios.put(inputData.value, data);
+    responseData.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const handlePatch = async () => {
-  const { data,  } = await useFetch(inputData.value, {
-    method: "PATCH",
-    body: {
-      title: "test product",
-      price: 13.5,
-      description: "lorem ipsum set",
-      image: "https://i.pravatar.cc",
-      category: "electronic",
-    },
-  });
-  responseData.value = data.value;
-  console.log("🚀 ~ file: detail.vue:373 ~ handlePost ~ data:", data);
-};
+// const handlePatch = async () => {
+//   const { data } = await useFetch(inputData.value, {
+//     method: "PATCH",
+//     body: {
+//       title: "test product",
+//       price: 13.5,
+//       description: "lorem ipsum set",
+//       image: "https://i.pravatar.cc",
+//       category: "electronic",
+//     },
+//   });
+//   responseData.value = data.value;
+//   console.log("🚀 ~ file: detail.vue:373 ~ handlePost ~ data:", data);
+// };
 
 const handleDelete = async () => {
-  const { data, } = await useFetch(inputData.value, {
-    method: "DELETE",
-  });
-  responseData.value = data.value;
+  try {
+    const response = await axios.delete(inputData.value);
+    responseData.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
   console.log(
-    "🚀 ~ file: test.vue:106 ~ handleDelete ~ handleDelete:",
+    "🚀 ~ file: test.vue:76 ~ handleDelete ~ handleDelete:",
     handleDelete
   );
 };
+
+function submitInput() {
+  console.log(inputValue.value);
+}
+
+
 
 </script>
