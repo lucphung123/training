@@ -118,9 +118,6 @@
           <div>
             <p class="mt5%">Response</p>
           </div>
-          <div>
-            <img class="p35% w40%" src="./repon.png" alt="" />
-          </div>
         </div>
       </div>
     </n-layout-footer>

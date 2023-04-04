@@ -45,4 +45,7 @@ export default defineNuxtConfig({
     port: 3000, // Đổi port thành 3000
     host: "localhost", // Đổi host thành localhost
   },
+  app: {
+    baseURL: '/nuxt-github-pages/' // baseURL: '/<repository>/'
+  }
 });
