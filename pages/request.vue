@@ -303,11 +303,11 @@ const responseData = ref(null);
 const value1 = ref("");
 const inputValue = ref("");
 const inputRef = ref(null);
+const newVariable = ref("");
 onMounted(() => {
   console.log("Table mounted");
 });
 const boxs = ref([]);
-const newVariable = ref("");
 const newInitialValue = ref("");
 
 const newCurrentValue = ref("");
@@ -397,7 +397,7 @@ const handleGet = async () => {
 
 const handlePost = async () => {
   try {
-    const data = JSON.parse(inputValue.value);
+    const data = inputValue.value ? JSON.parse(inputValue.value) : null;
     const response = await axios.post(inputData.value, data);
     responseData.value = response.data;
   } catch (error) {

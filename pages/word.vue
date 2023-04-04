@@ -1,92 +1,81 @@
 <template>
-  <div class="flex h-10% w-full">
-    <n-space class="w-15%" vertical>
-      <n-select v-model:value="selectRef" :options="options1" />
-    </n-space>
-    <input v-model="inputData" placeholder="Enter URL" />
-    <button @click="getApi">Send</button>
-  </div>
-  <div v-if="responseData">
-    <h3>Response Data:</h3>
-    <pre>{{ JSON.stringify(responseData, null, 2) }}</pre>
+  <div>
+    <div>
+      <input class="w-full" v-model="inputData" placeholder="Enter URL" />
+      <button>Send</button>
+    </div>
+    <n-table :bordered="false" :single-line="false" class="w-full">
+      <thead>
+        <tr>
+          <th class="w-5%"></th>
+          <th class="w-10%">Key</th>
+          <th class="w-10%">Value</th>
+          <th>Description</th>
+          <th class="w-full flex">
+            <div class="i-mdi:dots-horizontal text-xl"></div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(param, index) in params" :key="index">
+          <td>
+            <input type="checkbox" v-model="param.enabled" />
+          </td>
+          <td>
+            <input
+              type="text"
+              v-model="param.key"
+              placeholder="Key"
+              @input="handleInput(index)"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              v-model="param.value"
+              placeholder="Value"
+              @input="handleInput(index)"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              v-model="param.description"
+              placeholder="Description"
+              @input="handleInput(index)"
+            />
+          </td>
+          <td>
+            <div
+              @click="removeParam(index)"
+              class="i-mdi:trash-can-outline text-xl"
+            ></div>
+          </td>
+        </tr>
+      </tbody>
+    </n-table>
   </div>
 </template>
+
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
-const selectRef = ref("GET");
 const inputData = ref("https://642541e49e0a30d92b2ccf2a.mockapi.io/Minhh");
-const responseData = ref(null);
-const getApi = async () => {
-  switch (selectRef.value) {
-    case "GET":
-      await handleGet();
-      break;
-    case "POST":
-      console.log("post api");
-      await handlePost();
-      break;
-    case "PUT":
-      console.log("put api");
-      await handlePut();
-      break;
-    case "DELETE":
-      await handleDelete();
-      console.log("delete api");
-      break;
-    default:
-      break;
+
+const params = ref([{ key: "", value: "", description: "", enabled: true }]);
+const newParam = ref({ key: "", value: "", description: "", enabled: true });
+
+function handleInput(index) {
+  if (index === params.value.length - 1) {
+    params.value.push({ key: "", value: "", description: "", enabled: true });
   }
-  console.log("🚀 ~ file: test.vue:49 ~ getApi ~ handleGet:", handleGet);
-};
-const options1 = [
-  { label: "GET", value: "GET" },
-  { label: "POST", value: "POST" },
-  { label: "PUT", value: "PUT" },
-  { label: "DELETE", value: "DELETE" },
-];
-const handleGet = async () => {
-  try {
-    const response = await axios.get(inputData.value);
-    responseData.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-const handlePost = async () => {
-  try {
-    const data = {
-      requestId: "1233444",
-      items: "hello",
-      count: "1",
-      anyKey: "any",
-    };
-    const response = await axios.post(inputData.value, data);
-    responseData.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-const handlePut = async () => {
-  try {
-    const data = {
-      requestId: "minhhhh",
-      items: "Duong Tuan Minh",
-      count: "2",
-      anyKey: "mmmmm",
-    };
-    const response = await axios.put(inputData.value, data);
-    responseData.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-const handleDelete = async () => {
-  try {
-    const response = await axios.delete(inputData.value);
-    responseData.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
+}
+
+function addParam() {
+  params.value.push(newParam.value);
+  newParam.value = { key: "", value: "", description: "", enabled: true };
+}
+
+function removeParam(index) {
+  params.value.splice(index, 1);
+}
 </script>
