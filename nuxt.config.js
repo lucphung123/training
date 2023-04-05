@@ -47,6 +47,6 @@ export default defineNuxtConfig({
   },
   target: "static",
   app: {
-    baseURL: "/training", // baseURL: '/<repository>/'
+    baseURL: "/training/", // baseURL: '/<repository>/'
   },
 });
