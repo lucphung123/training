@@ -5,8 +5,8 @@
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "predeploy": "nuxt generate",
-    "deploy": "gh-pages -d dist"
+    "generate": "nuxt generate",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "devDependencies": {
     "@nuxt/vite-builder": "^3.3.1",

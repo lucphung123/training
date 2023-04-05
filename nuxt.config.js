@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     port: 3000, // Đổi port thành 3000
     host: "localhost", // Đổi host thành localhost
   },
+  target: "static",
   app: {
     baseURL: "/training", // baseURL: '/<repository>/'
   },
