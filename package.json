@@ -6,7 +6,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "generate": "nuxt generate",
-    "deploy": "gh-pages --dotfiles -d .output/public"
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@nuxt/vite-builder": "^3.3.1",
