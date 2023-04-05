@@ -1,4 +1,4 @@
-import{c as x,l as b,p as h}from"./Layout.65d229e6.js";import{d as v,g as i,i as a,u as m,l as f}from"./light.ac94ac37.js";import{m as p,s as d,p as C}from"./entry.4a3385b7.js";const P=x(!0),g=v("layout-header",`
+import{c as x,l as b,p as h}from"./Layout.29e198ed.js";import{b as v,e as i,k as a,j as m,n as f}from"./light.2e394c2d.js";import{m as p,q as d,p as C}from"./entry.68d15f63.js";const P=x(!0),y=v("layout-header",`
  transition:
  color .3s var(--n-bezier),
  background-color .3s var(--n-bezier),
@@ -15,7 +15,7 @@ import{c as x,l as b,p as h}from"./Layout.65d229e6.js";import{d as v,g as i,i as
  top: 0;
  `),i("bordered",`
  border-bottom: solid 1px var(--n-border-color);
- `)]),y={position:h,inverted:Boolean,bordered:{type:Boolean,default:!1}},I=p({name:"LayoutHeader",props:Object.assign(Object.assign({},a.props),y),setup(o){const{mergedClsPrefixRef:r,inlineThemeDisabled:n}=m(o),c=a("Layout","-layout-header",g,b,o,r),l=d(()=>{const{common:{cubicBezierEaseInOut:u},self:s}=c.value,e={"--n-bezier":u};return o.inverted?(e["--n-color"]=s.headerColorInverted,e["--n-text-color"]=s.textColorInverted,e["--n-border-color"]=s.headerBorderColorInverted):(e["--n-color"]=s.headerColor,e["--n-text-color"]=s.textColor,e["--n-border-color"]=s.headerBorderColor),e}),t=n?f("layout-header",d(()=>o.inverted?"a":"b"),l,o):void 0;return{mergedClsPrefix:r,cssVars:n?void 0:l,themeClass:t==null?void 0:t.themeClass,onRender:t==null?void 0:t.onRender}},render(){var o;const{mergedClsPrefix:r}=this;return(o=this.onRender)===null||o===void 0||o.call(this),C("div",{class:[`${r}-layout-header`,this.themeClass,this.position&&`${r}-layout-header--${this.position}-positioned`,this.bordered&&`${r}-layout-header--bordered`],style:this.cssVars},this.$slots)}}),_=v("layout-footer",`
+ `)]),g={position:h,inverted:Boolean,bordered:{type:Boolean,default:!1}},I=p({name:"LayoutHeader",props:Object.assign(Object.assign({},a.props),g),setup(o){const{mergedClsPrefixRef:r,inlineThemeDisabled:n}=m(o),c=a("Layout","-layout-header",y,b,o,r),l=d(()=>{const{common:{cubicBezierEaseInOut:u},self:s}=c.value,e={"--n-bezier":u};return o.inverted?(e["--n-color"]=s.headerColorInverted,e["--n-text-color"]=s.textColorInverted,e["--n-border-color"]=s.headerBorderColorInverted):(e["--n-color"]=s.headerColor,e["--n-text-color"]=s.textColor,e["--n-border-color"]=s.headerBorderColor),e}),t=n?f("layout-header",d(()=>o.inverted?"a":"b"),l,o):void 0;return{mergedClsPrefix:r,cssVars:n?void 0:l,themeClass:t==null?void 0:t.themeClass,onRender:t==null?void 0:t.onRender}},render(){var o;const{mergedClsPrefix:r}=this;return(o=this.onRender)===null||o===void 0||o.call(this),C("div",{class:[`${r}-layout-header`,this.themeClass,this.position&&`${r}-layout-header--${this.position}-positioned`,this.bordered&&`${r}-layout-header--bordered`],style:this.cssVars},this.$slots)}}),_=v("layout-footer",`
  transition:
  box-shadow .3s var(--n-bezier),
  color .3s var(--n-bezier),
