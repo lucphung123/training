@@ -49,4 +49,5 @@ export default defineNuxtConfig({
   app: {
     baseURL: "/training/", // baseURL: '/<repository>/'
   },
+ 
 });

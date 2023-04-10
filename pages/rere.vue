@@ -30,7 +30,7 @@ import axios from "axios";
 
 const selectRef = ref("GET");
 const inputData = ref("https://642541e49e0a30d92b2ccf2a.mockapi.io/Minhh");
-const responseData = ref(null);
+// const responseData = ref(null);
 const errorMsg = ref(null);
 
 const getApi = async () => {
@@ -108,27 +108,27 @@ const handleDelete = async () => {
   }
 };
 
-const inputValue = ref("");
-const inputRef = ref(null);
+// const inputValue = ref("");
+// const inputRef = ref(null);
 
-watchEffect(() => {
-  nextTick(() => {
-    if (inputRef.value) {
-      inputRef.value.style.height = "auto";
-      inputRef.value.style.height = `${inputRef.value.scrollHeight}px`;
-    }
-  });
-});
+// watchEffect(() => {
+//   nextTick(() => {
+//     if (inputRef.value) {
+//       inputRef.value.style.height = "auto";
+//       inputRef.value.style.height = `${inputRef.value.scrollHeight}px`;
+//     }
+//   });
+// });
 
-function submitInput() {
-  console.log(inputValue.value);
-}
+// function submitInput() {
+//   console.log(inputValue.value);
+// }
 
 function isValidUrl(url) {
   const urlPattern = /^(http|https):\/\/[^\s/$.?#].[^\s]*$/i;
   return urlPattern.test(url);
 }
-const showData = computed(() => {
-  return Boolean(responseData.value);
-});
+// const showData = computed(() => {
+//   return Boolean(responseData.value);
+// });
 </script>
