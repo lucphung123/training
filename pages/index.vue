@@ -87,8 +87,6 @@
         </n-table>
       </div>
     </n-layout-content>
-    <n-layout-footer><nuxt-link to="/request">565</nuxt-link> </n-layout-footer>
-    <n-layout-footer><nuxt-link to="/word">565fx</nuxt-link> </n-layout-footer>
   </n-layout>
 </template>
 <script setup>

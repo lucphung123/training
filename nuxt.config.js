@@ -34,6 +34,7 @@ export default defineNuxtConfig({
         process.env.NODE_ENV === "development"
           ? ["naive-ui", "vueuc", "date-fns-tz/esm/formatInTimeZone"]
           : [],
+          
     },
     plugins: [
       Components({
@@ -49,5 +50,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: "/training/", // baseURL: '/<repository>/'
   },
+  
+  
  
 });

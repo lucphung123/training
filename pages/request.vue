@@ -1,15 +1,15 @@
 <template>
-  <n-layout>
+  <n-layout class="p2">
     <n-layout-header>
       <div class="flex justify-between">
         <div class="flex">
-          <p>NewCollection/</p>
-          <p class="font-bold">New Request</p>
+          <p class="opacity-50">NewCollection /</p>
+          <p class="font-bold ml1">New Request</p>
         </div>
-        <div class="flex bg-gray-100 border-gray-300 rounded ml-68%">
-          <div class="flex items-center mr-1">
+        <div class="flex bg-#F8F8F8 mt1 rounded ml65% h10">
+          <div class="flex items-center mr-1 opacity-50">
             <div class="i-mdi:content-save-outline text-xl"></div>
-            <p class="decoration-none ml-1 cursor-pointer">Save</p>
+            <p class="ml-1 cursor-pointer">Save</p>
           </div>
           <n-dropdown
             placement="bottom-start"
@@ -17,7 +17,7 @@
             size="small"
             :options="options"
           >
-            <div class="i-mdi:chevron-down text-xl mt15% cursor-pointer"></div>
+            <div class="i-mdi:chevron-down text-xl mt9% cursor-pointer"></div>
           </n-dropdown>
         </div>
         <div>
@@ -27,11 +27,11 @@
             size="small"
             :options="options"
           >
-            <div class="i-mdi:dots-horizontal text-xl mt cursor-pointer"></div>
+            <div class="i-mdi:dots-horizontal text-xl mt3 cursor-pointer"></div>
           </n-dropdown>
         </div>
-        <div class="flex bg-gray-100 border border-gray-300 rounded mr2%">
-          <div class="flex items-center mr-1">
+        <div class="flex bg-#F8F8F8 rounded items-center mt1 space-x-2 h10">
+          <div class="flex mr-1">
             <div class="i-mdi:pencil-outline bg-red-500 text-xl"></div>
           </div>
           <n-dropdown
@@ -41,7 +41,7 @@
             :options="options"
           >
             <div
-              class="i-mdi:android-messages text-xl mt25% cursor-pointer"
+              class="i-mdi:message-processing-outline opacity50 text-xl cursor-pointer"
             ></div>
           </n-dropdown>
         </div>
@@ -53,25 +53,30 @@
         <n-space class="w-11%" vertical>
           <n-select v-model:value="selectedRef" :options="options1" />
         </n-space>
-
         <n-input
           class="w-82%"
           placeholder="Enter URL"
           v-model:value="inputData"
-          onUpdate:value="val => inputData.value = val"
+          @update:value="(val) => (inputData = val)"
           vertical
         />
-        <n-button @click="getApi" type="info"> Send </n-button>
-        <n-dropdown
-          placement="bottom-start"
-          trigger="click"
-          size="small"
-          :options="options"
-        >
-          <div>
-            <n-button class="i-mdi:chevron-down text-xl" type="info"></n-button>
-          </div>
-        </n-dropdown>
+
+        <div class="flex items-center bg-#2080f0 rounded">
+          <n-button @click="getApi" type="info"> Send </n-button>
+          <n-dropdown
+            placement="bottom-start"
+            trigger="click"
+            size="small"
+            :options="options"
+          >
+            <div>
+              <n-button
+                class="i-mdi:chevron-down text-xl mt1 mr1 bg-white"
+                type="info"
+              ></n-button>
+            </div>
+          </n-dropdown>
+        </div>
       </div>
     </n-layout-content>
     <n-layout-footer class=" ">
@@ -152,12 +157,11 @@
                 <n-data-table
                   :columns="columns"
                   :data="data"
-                  :pagination="pagination"
                   :row-key="rowKey"
                   @update:checked-row-keys="checkActive"
                 />
               </n-tab-pane>
-              <n-tab-pane name="the beatles" tab="Herders">
+              <n-tab-pane name="the beatles" tab="Headers">
                 <div class="flex items-center space-x-4">
                   <div>
                     <a class="decoration-none text-black font-bold" href=""
@@ -292,10 +296,14 @@
             </n-tabs>
           </n-card>
         </div>
-        <div class="w1/3 bg-white">
-          <div v-if="responseData">
-            <p class="mt5%">Response</p>
-            <pre>{{ JSON.stringify(responseData, null, 2) }}</pre>
+        <div class="w1/3 bg-white overflow-y-auto   h82%">
+          <h2 class="ml-5 text-truegray-500">Response</h2>
+
+          <div v-if="loading" class="spinner"></div>
+          <div v-else class="whitespace-pre-wrap">
+             <n-config-provider  :hljs="hljs">
+                <n-code  :code="JSON.stringify(responseData, null, 2)" language="json" />
+              </n-config-provider>
           </div>
           <div v-if="errorMsg">
             <p>{{ errorMsg }}</p>
@@ -309,38 +317,27 @@
 import { NInput, NButton } from "naive-ui";
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
+import hljs from "highlight.js/lib/core"
+ import json from "highlight.js/lib/languages/json"
+ 
+ hljs.registerLanguage("json", json)
 const selectedRef = ref(1);
 // const inputData = ref("https://6425a3217ac292e3cf0661d3.mockapi.io/LUCC");
-const responseData = ref(null);
+const responseData = ref();
 const value1 = ref("");
 const inputValue = ref("");
-const inputRef = ref(null);
 const newVariable = ref("");
-const errorMsg = ref(null);
+const errorMsg = ref();
+const loading = ref(false);
+const boxs = ref([]);
 onMounted(() => {
   console.log("Table mounted");
 });
-const boxs = ref([]);
-const newInitialValue = ref("");
-
-const newCurrentValue = ref("");
 const options = [
   {
     label: "Send and Dowload",
   },
 ];
-// function addNewRow(index) {
-//   if (newVariable.value.trim() !== "") {
-//     boxs.value.splice(index + 1, 0, {
-//       variable: newVariable.value,
-//       initialValue: newInitialValue.value,
-//       currentValue: newCurrentValue.value,
-//     });
-//     newVariable.value = "";
-//     newInitialValue.value = "";
-//     newCurrentValue.value = "";
-//   }
-// }
 watch(boxs, (newboxs) => {
   console.log(newboxs);
 });
@@ -367,10 +364,9 @@ const options1 = [
   },
 ];
 
-const receivedData = ref("");
-
 const getApi = async () => {
-  if (!isValidUrl(inputParams.value)) {
+  loading.value = true;
+  if (!isValidUrl(inputData.value)) {
     errorMsg.value = "URL không đúng định dạng";
     responseData.value = null;
     return;
@@ -402,63 +398,75 @@ const getApi = async () => {
     default:
       break;
   }
+  setTimeout(() => {
+    loading.value = false; // ẩn spinner
+  }, 1000);
 };
 
 const handleGet = async () => {
   try {
-    const response = await axios.get(inputParams.value);
+    const response = await axios.get(inputData.value);
     responseData.value = response.data;
+    errorMsg.value = null;
   } catch (error) {
-    console.error(error);
+    if (error.response) {  
+      errorMsg.value = error.response.data;
+      responseData.value = error.response;
+    } else {
+      console.error(error);
+      errorMsg.value = "Đã xảy ra lỗi trong quá trình gửi yêu cầu";
+      responseData.value = error.response;
+    }
   }
-  console.log("🚀 ~ file: test.vue:46 ~ handleGet ~ handleGet:", handleGet);
 };
 
 const handlePost = async () => {
   try {
     const data = inputValue.value ? JSON.parse(inputValue.value) : null;
-    const response = await axios.post(inputParams.value, data);
+    const response = await axios.post(inputData.value, data);
     responseData.value = response.data;
   } catch (error) {
-    console.error(error);
+    if (error.response) {
+      errorMsg.value = error.response.data;
+      responseData.value = null;
+    } else {
+      console.error(error);
+      errorMsg.value = "Đã xảy ra lỗi trong quá trình gửi yêu cầu";
+      responseData.value = null;
+    }
   }
 };
 const handlePut = async () => {
   try {
     const data = inputValue.value ? JSON.parse(inputValue.value) : null;
-    const response = await axios.put(inputParams.value, data);
+    const response = await axios.put(inputData.value, data);
     responseData.value = response.data;
   } catch (error) {
-    console.error(error);
+    if (error.response) {
+      errorMsg.value = error.response.data;
+      responseData.value = null;
+    } else {
+      console.error(error);
+      errorMsg.value = "Đã xảy ra lỗi trong quá trình gửi yêu cầu";
+      responseData.value = null;
+    }
   }
 };
 
-// const handlePatch = async () => {
-//   const { data } = await useFetch(inputData.value, {
-//     method: "PATCH",
-//     body: {
-//       title: "test product",
-//       price: 13.5,
-//       description: "lorem ipsum set",
-//       image: "https://i.pravatar.cc",
-//       category: "electronic",
-//     },
-//   });
-//   responseData.value = data.value;
-//   console.log("🚀 ~ file: detail.vue:373 ~ handlePost ~ data:", data);
-// };
-
 const handleDelete = async () => {
   try {
-    const response = await axios.delete(inputParams.value);
+    const response = await axios.delete(inputData.value);
     responseData.value = response.data;
   } catch (error) {
-    console.error(error);
+    if (error.response) {
+      errorMsg.value = error.response.data;
+      responseData.value = null;
+    } else {
+      console.error(error);
+      errorMsg.value = "Đã xảy ra lỗi trong quá trình gửi yêu cầu";
+      responseData.value = null;
+    }
   }
-  console.log(
-    "🚀 ~ file: test.vue:76 ~ handleDelete ~ handleDelete:",
-    handleDelete
-  );
 };
 
 function submitInput() {
@@ -585,16 +593,11 @@ const columns = [
             handleDeleteRow(row);
           },
         },
-        "delete"
+        "Delete"
       );
     },
   },
 ];
-
-const pagination = () => ({
-  pageSize: 10,
-});
-
 const checkActive = (checkedRowKeys) => {
   let url;
   try {
@@ -634,7 +637,7 @@ const checkActive = (checkedRowKeys) => {
     }
   }
 
-  // Thay đổi query parameter trên URL và lưu vào inputParams
+  // Thay đổi query parameter trên URL và lưu vào inputData
   url.search = params;
   inputData.value = url.href;
 };
@@ -655,4 +658,39 @@ function isValidUrl(url) {
   const urlPattern = /^(http|https):\/\/[^\s/$.?#].[^\s]*$/i;
   return urlPattern.test(url);
 }
+
+// const myContainer = ref(null)
+// onMounted(() => {
+//   myContainer.value.addEventListener("mouseenter", handleMouseEnter);
+//   myContainer.value.addEventListener("mouseleave", handleMouseLeave);
+// });
+
+// const handleMouseEnter = () => {
+//   myContainer.value.style.overflowY = "scroll";
+// };
+
+// const handleMouseLeave = () => {
+//   myContainer.value.style.overflowY = "hidden";
+// };
 </script>
+
+<style>
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #97fe07;
+  border-radius: 0%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 83%;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
