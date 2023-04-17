@@ -318,7 +318,7 @@ import { NInput, NButton } from "naive-ui";
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 import hljs from "highlight.js/lib/core"
- import json from "highlight.js/lib/languages/json"
+import json from "highlight.js/lib/languages/json"
  
  hljs.registerLanguage("json", json)
 const selectedRef = ref(1);
