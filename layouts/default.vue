@@ -88,6 +88,7 @@ const newCollection = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items.value));
 };
 
+
 const options = [
   {
     label: "Add Folder",
