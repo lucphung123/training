@@ -452,6 +452,29 @@ const handlePut = async () => {
     }
   }
 };
+const handlePatch = async () => {
+  try {
+    const data = inputValue.value ? JSON.parse(inputValue.value) : null;
+    const response = await axios.request({
+      method: "PATCH",
+      url: inputData.value,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    });
+    responseData.value = response.data;
+  } catch (error) {
+    if (error.response) {
+      errorMsg.value = error.response.data;
+      responseData.value = null;
+    } else {
+      console.error(error);
+      errorMsg.value = "Đã xảy ra lỗi trong quá trình gửi yêu cầu";
+      responseData.value = null;
+    }
+  }
+};
 
 const handleDelete = async () => {
   try {
