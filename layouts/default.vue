@@ -28,7 +28,7 @@
                 :key="index"
               >
                 <nuxt-link
-                  to="/params"
+                  to="/request"
                   class="flex items-center space-x-2 cursor-pointer decoration-none mt--3 ml-8"
                 >
                   <p class="text-green text-sm">Get</p>
